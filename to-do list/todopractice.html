@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <title>To Do list</title>
+  <style>    
+    .body{
+        background-image: url("images/work.jpg");
+        background-repeat: no-repeat;
+        background-size: cover; 
+    }
+    .a{
+      color: whitesmoke;
+    }
+    .button1{
+      background-color: burlywood;
+      height:20px;
+    }
+    .center{
+      text-align: center;
+    }
+    table, th, td {
+
+      border: 1px solid black;
+      margin: auto;
+    }
+    td{
+      font-size: 30px;
+    }
+    .b{
+      color: gainsboro;
+    }
+    #ab{
+        border:solid;
+    }
+    .inbutton button{
+      height:50px;
+      width:150px;
+      border-radius: 5px;
+      border:0;
+      background-color: green;
+      cursor:pointer;
+      font-weight: bolder;
+      color: whitesmoke;
+      margin-left: 10px;
+    }
+    .c{
+      color: whitesmoke;
+    }
+    .main{
+      background-color: blueviolet;
+      width:600px;
+      margin:40px;
+      float: left;
+      border: black;
+      /* border-color: black; */
+    }
+    input{
+        background-color: blue;
+        border:0;
+        width: 150px;
+        height:100px;
+        padding:0 40px;
+        margin:10px;
+        font-size:20px ;
+        border-radius: 15px;
+        color: whitesmoke;
+    }
+    input::placeholder{
+      color: whitesmoke;
+    }
+  </style>
+</head>
+
+<body class="body">
+  <div id="app">
+  <script type="text/babel">
+
+
+    class App extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = {
+          tasks:[],
+          input: "",
+          index:-1,       
+          restore:[]
+        };
+      }
+
+
+      render(){
+        return(
+            <div>
+              <h1>Tasks:</h1> 
+              <table  class="main"id="abc">
+                <thead>
+                    <h2 class="center" class="b" >To Do List</h2>       
+                </thead>
+                  <tbody>
+                      <div class="inbutton button">
+                        <input type="text" onChange={this.UpdateResponse} placeholder="Add tasks here" value={this.state.input}/>
+                        <button  onClick={this.addTask} > Add Task</button> &nbsp; &nbsp;  <button  onClick={this.Update}> Update </button>
+                        <h2 class="c"> Number of tasks: {this.state.tasks.length}</h2>  
+                      </div>
+                        {this.state.tasks.map((task,i) =>
+                        <tr class="d" key={i}>
+                          <td class="a"> {task}</td>
+                          <td>
+                            <button class="button1" onClick={(event)=>{this.deleteTask(event,i)}}> delete</button>
+                          </td>
+                          <td><button class="button1" onClick={(event)=>{this.edit(event,i)}}> Edit </button> </td>
+                        </tr>
+                        )} <br/>      
+                  </tbody> 
+              </table>  
+
+              <div>
+                <div class="main">          
+                  <h2 class="b">Trash</h2>
+                  <table>
+                    <thead class="b"><tr><td>Task</td><td>Action</td><td>Action</td></tr></thead>
+                      <tbody>      
+                        {this.state.restore.map((task,i) =>
+                          <tr key={i}>
+                            <td class="a"> {task}</td>
+                            <td>
+                              <button  class="button1" onClick={(event)=>{this.delete(event,i)}}> Delete</button>
+                            </td>
+                            <td>
+                              <button class="button1" onClick={this.addTask1} value={this.state.input} > Restore</button> </td>
+                          </tr>
+                        )} <br/>      
+                      </tbody>
+                  </table>  
+                </div>
+            </div>
+          </div>
+        );
+      }
+
+      addTask1=(event,i)=>{
+        var n=[...this.state.restore]
+        this.state.tasks=[...this.state.tasks,n.splice(i,1)]
+        //var tasks=document.getElementById("todotasks")
+        this.setState(state=>({restore:n,}));
+        console.log(this.state.tasks)
+        
+        // var l=event.target.input;
+        // console.log(l)
+      }
+
+
+      delete=(event)=>{
+        var index =event.target.value     
+        var tasks_list= this.state.restore.splice(index, 1);
+        // console.log(tasks_lists)
+        this.setState({restore: this.state.restore});
+      } 
+
+      UpdateResponse=(event)=>{
+        this.setState({input:event.target.value,});
+        // console.log(input)
+      }
+
+
+      addTask=(event)=>{
+        if(this.state.input==""){
+                    return;
+        }
+        this.setState(state=>({
+          tasks:[...state.tasks,state.input],         
+          input:""
+        }));
+      }
+
+
+      deleteTask=(event,i)=>{
+        var n=[...this.state.tasks]
+        this.state.restore=[...this.state.restore,n.splice(i,1)]      
+        this.setState(state=>({tasks:n,}));
+        // console.log(this.state.restore)
+      }
+
+      edit=(event,i)=>{
+        this.setState({
+          input:this.state.tasks[i],
+          index:i
+        })
+      }
+
+      Update=()=>{
+        var n=[...this.state.tasks]
+        n[this.state.index]=this.state.input
+        this.setState({
+          tasks:n,
+          input:""
+        })
+      }
+
+      gettasks = () => {
+        fetch('https://raw.githubusercontent.com/Vamsi89-MSIT/React-JS-Week-3-todolist/main/todolsit.json') 
+        .then(resp => resp.json())
+        .then(data => {
+          console.log(data);
+          this.setState({tasks:data});
+        });
+		  }
+		
+      componentDidMount(){
+        this.gettasks();     
+      }
+
+    }
+  ReactDOM.render(<App />, document.querySelector("#app"));
+
+  </script>
+</body>
+
+</html>

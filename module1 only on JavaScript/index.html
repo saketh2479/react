@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>BMI Calculator</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="outer-div">
+        <div id="header-div">
+            <h1>BMI CALCULATOR</h1>
+        </div>
+                <fieldset id="content-div">
+                    <legend>Calculate Now</legend>
+                        <table id="input-table">
+                            <tr>
+                                <td>Measurement Unit</td>
+                                <td>
+                                    <select name="unit" id="selectop">
+                                        <option value="typea">Kg / Meter</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Your Weight</td>
+                                <td><input type="number" name="weight" placeholder="Kilogram" id="ww" oninput="wfun();"></td>
+                            </tr>
+                            <tr>
+                                <td>Your Height</td>
+                                <td><input type="number" name="height" placeholder="feets" id="hh" oninput="hfun();"></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><input type="button" value="Calculate Now" onclick="cfun();"><i class="fa fa-refresh" aria-hidden="true" style="cursor:pointer; font-size: 20px;" onclick="document.location.reload();"></i></td>
+                            </tr>
+                        </table>
+              </fieldset>
+        <div id="result-div">
+            <table id="result-table">
+                <tr>
+                        <td class="a">Your Weight is</td>
+                        <td class="b">:-</td>
+                        <td class="c" id="w-value"></td>
+                </tr>
+                <tr>
+                    <td class="a">Your Height is</td>
+                    <td class="b">:-</td>
+                    <td class="c" id="h-value"></td>
+                </tr>
+                <tr>
+                    <td class="a">Your<b><font color="red"> BMI </font></b>is</td>
+                    <td class="b">:-</td>
+                    <td class="c cc" id="b-value"></td>
+                </tr>
+            </table>
+                <h4 id="sw" class="empty">You are Severly Under Weighted</h4>
+                <h4 id="uw" class="empty">You are Under Weighted</h4>
+                <h4 id="nw" class="empty">You are Normal Weighted</h4>
+                <h4 id="ow" class="empty">You are Over Weighted</h4>
+                <h4 id="ob" class="empty">You are Obese</h4>
+        </div>
+    </div>
+    <div id="outer-div1">
+        <div id="header-div1">
+        <h1>
+            SIMPLE CALCULATOR
+            <span>
+                A simple form to calculate two numbers.
+            </span>
+        </h1>
+        <div class="input-control">
+            <br><br>
+            <label for="num1">
+                Number 1: <input type="text" id="num1" placeholder="First number" autofocus>
+            </label>
+        </div><!-- /.input-control -->
+    
+        <div class="input-control">
+            <label for="num1">
+                Number 2: <input type="text" id="num2" placeholder="Second number">
+            </label>
+        </div><!-- /.input-control -->
+    
+        <div class="input-control controls">
+            <label for="method_add">
+                    <input type="radio" name="method" id="method_add" value="add" checked>
+                    Add
+            </label>
+            <label for="method_sub">
+                    <input type="radio" name="method" id="method_sub" value="sub">
+                    Subtract
+            </label>
+            <label for="method_mul">
+                    <input type="radio" name="method" id="method_mul" value="mul">
+                    Multiply
+            </label>
+            <label for="method_div">
+                    <input type="radio" name="method" id="method_div" value="div">
+                    Divide
+            </label>
+        </div><!-- /.input-control -->
+        <div class="input-control button">
+            <button id="calculate">Calculate</button>
+        </div><!-- /.input-control -->
+    </div><!-- /.container -->
+    <div class="container result">
+        Answer
+        <p class="answer">0</p>
+    </div>
+</aside>
+<script src="script.js"></script>
+</body>
+</html>
